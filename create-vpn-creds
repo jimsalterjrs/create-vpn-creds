@@ -1,0 +1,31 @@
+#!/bin/bash
+
+clientname=$1
+
+echo
+
+if [ ! -f /etc/openvpn/keys/$clientname.crt ]
+then
+   echo Creating credentials for $clientname ...
+   source /etc/openvpn/vars > /dev/null
+   /etc/openvpn/build-key $clientname 2> /dev/null
+else
+   echo Existing credentials for $clientname found ...
+fi
+
+cat /etc/openvpn/templates/client-template.base > /tmp/$clientname.ovpn
+
+echo '<ca>' >> /tmp/$clientname.ovpn
+cat /etc/openvpn/keys/ca.crt >> /tmp/$clientname.ovpn
+echo '</ca>' >> /tmp/$clientname.ovpn
+
+echo '<cert>' >> /tmp/$clientname.ovpn
+cat /etc/openvpn/keys/$clientname.crt >> /tmp/$clientname.ovpn
+echo '</cert>' >> /tmp/$clientname.ovpn
+
+echo '<key>' >> /tmp/$clientname.ovpn
+cat /etc/openvpn/keys/$clientname.key >> /tmp/$clientname.ovpn
+echo '</key>' >> /tmp/$clientname.ovpn
+
+echo Credentials exported to /tmp/$clientname.ovpn.
+echo

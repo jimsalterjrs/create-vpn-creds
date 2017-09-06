@@ -1,0 +1,28 @@
+# replace YOURVPNSERVER with your VPN server's FQDN or IP address.
+
+ remote YOURVPNSERVER 1194
+ comp-lzo
+ client
+ dev tun
+
+ # enable redirect-gateway only if you want ALL traffic to go
+ # across the VPN, and if the VPN server has masquerade enabled.
+ #
+ # redirect-gateway def1
+ 
+ remote-cert-tls server
+ cipher AES-256-CBC
+ auth SHA512
+ 
+ proto udp
+ resolv-retry infinite
+ nobind
+ 
+ # Try to preserve some state across restarts.
+ persist-key
+ persist-tun
+ 
+ # Set log file verbosity.
+ verb 3
+ mute 20
+

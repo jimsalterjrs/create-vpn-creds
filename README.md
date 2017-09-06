@@ -12,7 +12,7 @@ create-vpn-creds expects to find a template config file at
 /etc/openvpn/templates/client-template.base. Sample config
 file included in this repo.
 
-```bash
+```
 root@yourserver:~# create-vpn-creds clientname
 
 Creating credentials for jrs ...
